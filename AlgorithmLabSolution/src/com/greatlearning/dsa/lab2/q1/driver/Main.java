@@ -26,21 +26,19 @@ public class Main {
 		for (int i = 0; i < size; i++) {
 			transaction.add(Math.abs(sc.nextInt()));
 		}
-		
-		for(int i=1;i<size;i++) {
-			transaction.set(i, transaction.get(i-1) + transaction.get(i));
+
+		for (int i = 1; i < size; i++) {
+			transaction.set(i, transaction.get(i - 1) + transaction.get(i));
 		}
-		
-		System.out.println(transaction);
-		
+
 		System.out.println("Enter the total no of targets that needs to be achieved");
 		targetSize = sc.nextInt();
 
 		if (targetSize <= 0) {
 			System.err.println("\nTotal no of targets that needs to be achieved should be greater than zero");
 		}
-		
-		if(targetSize == 1) {
+
+		if (targetSize == 1) {
 			System.out.println();
 		}
 
@@ -58,7 +56,7 @@ public class Main {
 				} else {
 					System.out.println("Target achieved after " + countOfTransaction + " transactions\n");
 				}
-			}else {
+			} else {
 				System.err.println("\nTarget value should be greater than or equal to zero");
 			}
 		}
@@ -66,17 +64,17 @@ public class Main {
 		transaction = null;
 		sc.close();
 	}
-	
+
 	/*
 	 * If all the test cases does not pass, then use search2 in line no 55
 	 * 
 	 */
 	private static final int search2(final List<Integer> transaction, final int size, final int targetValue) {
-		
+
 		int count = 0;
-		for(Integer eachTransaction : transaction) {
+		for (Integer eachTransaction : transaction) {
 			count++;
-			if(targetValue<=eachTransaction) {
+			if (targetValue <= eachTransaction) {
 				return count;
 			}
 		}
@@ -88,7 +86,8 @@ public class Main {
 		int low = 0, high = size - 1, mid = -1;
 
 		/*
-		 * checking for size <= 2 so that we can get the result in constant time for very low inputs
+		 * checking for size <= 2 so that we can get the result in constant time for
+		 * very low inputs
 		 */
 		if (size <= 2) {
 			if (targetValue <= transaction.get(low)) {
@@ -107,7 +106,7 @@ public class Main {
 			while (low <= high) {
 				mid = low + (high - low) / 2;
 				if (mid > 0) {
-					
+
 					if (targetValue <= transaction.get(mid)) {
 						high = mid;
 					} else {
@@ -116,12 +115,12 @@ public class Main {
 					if (targetValue > transaction.get(mid - 1) && targetValue <= transaction.get(mid)) {
 						return mid + 1;
 					}
-				} else if(mid == 0){
-					if(targetValue <= transaction.get(mid))
+				} else if (mid == 0) {
+					if (targetValue <= transaction.get(mid))
 						return mid + 1;
 					else
 						return -1;
-				}else
+				} else
 					return -1;
 
 			}
