@@ -66,7 +66,7 @@ public class Main {
 	}
 
 	/*
-	 * If all the test cases does not pass, then use search2 in line no 55
+	 * If all the test cases does not pass, then use search2 in line no 53
 	 * 
 	 */
 	private static final int search2(final List<Integer> transaction, final int size, final int targetValue) {
