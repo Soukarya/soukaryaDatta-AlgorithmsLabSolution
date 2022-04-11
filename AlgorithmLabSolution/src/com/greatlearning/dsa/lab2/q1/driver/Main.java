@@ -9,7 +9,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		int size = 0, targetSize = -1, targetValue = 0;
-		List<Integer> transaction = null;
+		List<Integer> transactions = null;
 		Scanner sc = new Scanner(System.in);
 
 		do {
@@ -18,19 +18,19 @@ public class Main {
 			if (size <= 0) {
 				System.err.println("Invalid input! Array size should be greater than zero\n");
 			} else {
-				transaction = new LinkedList<>();
+				transactions = new LinkedList<>();
 			}
 		} while (size <= 0);
 
 		System.out.println("Enter the values of array");
 		for (int i = 0; i < size; i++) {
-			transaction.add(Math.abs(sc.nextInt()));
+			transactions.add(Math.abs(sc.nextInt()));
 		}
 
 		for (int i = 1; i < size; i++) {
-			transaction.set(i, transaction.get(i - 1) + transaction.get(i));
+			transactions.set(i, transactions.get(i - 1) + transactions.get(i));
 		}
-
+		
 		System.out.println("Enter the total no of targets that needs to be achieved");
 		targetSize = sc.nextInt();
 
@@ -50,7 +50,7 @@ public class Main {
 			if (targetValue >= 0) {
 
 				targetSize--;
-				final int countOfTransaction = search(transaction, size, targetValue);
+				final int countOfTransaction = search(transactions, size, targetValue);
 				if (countOfTransaction == -1) {
 					System.out.println(" Given target is not achieved\n");
 				} else {
@@ -61,7 +61,7 @@ public class Main {
 			}
 		}
 
-		transaction = null;
+		transactions = null;
 		sc.close();
 	}
 
@@ -69,10 +69,10 @@ public class Main {
 	 * If all the test cases does not pass, then use search2 in line no 53
 	 * 
 	 */
-	private static final int search2(final List<Integer> transaction, final int size, final int targetValue) {
+	private static final int search2(final List<Integer> transactions, final int size, final int targetValue) {
 
 		int count = 0;
-		for (Integer eachTransaction : transaction) {
+		for (Integer eachTransaction : transactions) {
 			count++;
 			if (targetValue <= eachTransaction) {
 				return count;
@@ -85,21 +85,17 @@ public class Main {
 
 		int low = 0, high = size - 1, mid = -1;
 
-		/*
-		 * checking for size <= 2 so that we can get the result in constant time for
-		 * very low inputs
-		 */
-		if (size <= 2) {
-			if (targetValue <= transaction.get(low)) {
-				return low + 1;
-			}
+		if (targetValue <= transaction.get(low)) {
+			return low + 1;
+		}
 
+		if (targetValue > transaction.get(high)) {
+			return -1;
+		}
+
+		if (size <= 2) {
 			if (targetValue > transaction.get(low) && targetValue <= transaction.get(high)) {
 				return high + 1;
-			}
-
-			if (targetValue > transaction.get(high)) {
-				return -1;
 			}
 		} else {
 
@@ -115,13 +111,9 @@ public class Main {
 					if (targetValue > transaction.get(mid - 1) && targetValue <= transaction.get(mid)) {
 						return mid + 1;
 					}
-				} else if (mid == 0) {
-					if (targetValue <= transaction.get(mid))
-						return mid + 1;
-					else
-						return -1;
-				} else
-					return -1;
+				} else {
+					break;
+				}
 
 			}
 		}
