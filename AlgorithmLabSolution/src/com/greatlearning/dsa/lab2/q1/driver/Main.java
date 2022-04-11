@@ -31,6 +31,8 @@ public class Main {
 			transaction.set(i, transaction.get(i-1) + transaction.get(i));
 		}
 		
+		System.out.println(transaction);
+		
 		System.out.println("Enter the total no of targets that needs to be achieved");
 		targetSize = sc.nextInt();
 
@@ -64,6 +66,18 @@ public class Main {
 		transaction = null;
 		sc.close();
 	}
+	
+	private static int search2(final List<Integer> transaction, final int size, final int targetValue) {
+		
+		int count = 0;
+		for(Integer eachTransaction : transaction) {
+			count++;
+			if(targetValue<=eachTransaction) {
+				return count;
+			}
+		}
+		return -1;
+	}
 
 	private static int search(final List<Integer> transaction, final int size, final int targetValue) {
 
@@ -85,25 +99,23 @@ public class Main {
 
 			while (low <= high) {
 				mid = low + (high - low) / 2;
-
-				if (targetValue <= transaction.get(low)) {
-					return low + 1;
-				}
-				if (targetValue > transaction.get(high)) {
-					return -1;
-				}
 				if (mid > 0) {
+					
 					if (targetValue <= transaction.get(mid)) {
-						high = mid - 1;
+						high = mid;
 					} else {
 						low = mid + 1;
 					}
 					if (targetValue > transaction.get(mid - 1) && targetValue <= transaction.get(mid)) {
 						return mid + 1;
 					}
-				} else {
+				} else if(mid == 0){
+					if(targetValue <= transaction.get(mid))
+						return mid + 1;
+					else
+						return -1;
+				}else
 					return -1;
-				}
 
 			}
 		}
