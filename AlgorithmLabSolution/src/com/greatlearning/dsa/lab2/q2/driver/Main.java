@@ -20,16 +20,21 @@ public class Main {
 
 			System.out.println("\nEnter the currency denominations value");
 			for (int i = 0; i < size; i++) {
-				currencyDenominations[i] = sc.nextInt();
+				currencyDenominations[i] = Math.abs(sc.nextInt());
 			}
 
 			// sorting in descending order
-			Arrays.sort(currencyDenominations,Collections.reverseOrder());
+			Arrays.sort(currencyDenominations, Collections.reverseOrder());
 
 			System.out.println("\nEnter the amount you want to pay");
 			amount = sc.nextInt();
 
-			System.out.println(getDenomination(currencyDenominations, amount));
+			if (amount > 0) {
+				System.out.println(getDenomination(currencyDenominations, amount));
+			} else {
+				System.err.println("\nInvalid amount! Please enter amount greater than 0");
+			}
+
 		} else {
 			System.err.println("Array size cannot be zero or negative");
 		}
@@ -37,23 +42,22 @@ public class Main {
 		sc.close();
 	}
 
-	private static StringBuilder getDenomination(Integer[] notes, int amount) {
+	private static StringBuilder getDenomination(final Integer[] notes, int amount) {
 
-		StringBuilder s = new StringBuilder();
+		final StringBuilder s = new StringBuilder();
 		for (int note : notes) {
 			int countOfNotes = 0;
 			if (note <= amount) {
-				//isPresent = true;
-				countOfNotes = amount/note;
+				countOfNotes = amount / note;
 				amount -= countOfNotes * note;
 				s.append(note + ":" + countOfNotes + "\n");
 			}
-				
+
 		}
-		if(amount<=0) {
+		if (amount <= 0) {
 			System.out.println("\nYour payment approach in order to give min no of notes will be");
 			return s;
-		}else {
+		} else {
 			return s.delete(0, s.length()).append("\nCannot pay using given denominations");
 		}
 	}

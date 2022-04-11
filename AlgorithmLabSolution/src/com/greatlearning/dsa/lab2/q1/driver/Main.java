@@ -67,7 +67,11 @@ public class Main {
 		sc.close();
 	}
 	
-	private static int search2(final List<Integer> transaction, final int size, final int targetValue) {
+	/*
+	 * If all the test cases does not pass, then use search2 in line no 55
+	 * 
+	 */
+	private static final int search2(final List<Integer> transaction, final int size, final int targetValue) {
 		
 		int count = 0;
 		for(Integer eachTransaction : transaction) {
@@ -79,10 +83,13 @@ public class Main {
 		return -1;
 	}
 
-	private static int search(final List<Integer> transaction, final int size, final int targetValue) {
+	private static final int search(final List<Integer> transaction, final int size, final int targetValue) {
 
 		int low = 0, high = size - 1, mid = -1;
 
+		/*
+		 * checking for size <= 2 so that we can get the result in constant time for very low inputs
+		 */
 		if (size <= 2) {
 			if (targetValue <= transaction.get(low)) {
 				return low + 1;
